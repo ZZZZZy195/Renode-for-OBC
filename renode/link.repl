@@ -1,0 +1,150 @@
+using "./stm32f4.repl"
+
+memoryBank1: Memory.MappedMemory @ sysbus 0xC0000000
+    size: 0x10000000
+
+gpioPortG: GPIOPort.STM32_GPIOPort @ sysbus <0x40021800, +0x400>
+    numberOfAFs: 16
+    [0-15] -> exti@[0-15]
+
+gpioPortH: GPIOPort.STM32_GPIOPort @ sysbus <0x40021C00, +0x400>
+    numberOfAFs: 16
+    [0-15] -> exti@[0-15]
+
+gpioPortI: GPIOPort.STM32_GPIOPort @ sysbus <0x40022000, +0x400>
+    numberOfAFs: 16
+    [0-15] -> exti@[0-15]
+
+JB1910: Antmicro.Renode.Peripherals.GPIOPort.Relay2JB1910 @ sysbus <0x70010000, +0x400>
+
+SN74AHC2731: Antmicro.Renode.Peripherals.GPIOPort.SN74AHC273 @ sysbus <0x70020000, +0x400>
+    8 -> uln2803a1@0
+    9 -> uln2803a1@1
+    10 -> uln2803a1@2
+    11 -> uln2803a1@3
+    12 -> uln2803a1@4
+    13 -> uln2803a1@5
+    14 -> uln2803a1@6
+    15 -> uln2803a1@7
+    0 -> gpioPortD@13
+    1 -> gpioPortD@12
+    2 -> gpioPortD@11
+    3 -> gpioPortD@10
+    4 -> gpioPortB@12
+    5 -> gpioPortB@13
+    6 -> gpioPortB@14
+    7 -> gpioPortB@15
+
+SN74AHC2732: Antmicro.Renode.Peripherals.GPIOPort.SN74AHC273 @ sysbus <0x70020400, +0x400>
+    8 -> uln2803a2@0
+    9 -> uln2803a2@1
+    10 -> uln2803a2@2
+    11 -> uln2803a2@3
+    12 -> uln2803a2@4
+    13 -> uln2803a2@5
+    14 -> uln2803a2@6
+    15 -> uln2803a2@7
+    0 -> gpioPortB@11
+    1 -> gpioPortB@10
+    2 -> gpioPortE@15
+    3 -> gpioPortE@14
+    4 -> gpioPortE@12
+    5 -> gpioPortE@11
+    6 -> gpioPortE@10
+    7 -> gpioPortE@9
+
+ADS83441: Antmicro.Renode.Peripherals.Analog.ADS8344_ADC @ sysbus 0x50025400
+    CS -> gpioPortI@0
+    DCLK -> gpioPortI@1
+    DIN -> gpioPortI@3
+    DOUT -> gpioPortI@2
+    AIn0 -> pc1042@7
+    AIn1 -> pc1042@8
+    AIn2 -> pc1042@5
+    AIn3 -> pc1042@6
+    AIn4 -> pc1042@3
+    AIn5 -> pc1042@4
+    AIn6 -> pc1042@1
+    AIn7 -> pc1042@2
+
+ADS83442: Antmicro.Renode.Peripherals.Analog.ADS8344_ADC @ sysbus 0x50026800
+    CS -> gpioPortA@4
+    DCLK -> gpioPortA@5
+    DIN -> gpioPortA@7
+    DOUT -> gpioPortA@6
+    AIn0 -> pc1042@15
+    AIn1 -> pc1042@13
+    AIn2 -> pc1042@14
+    AIn3 -> pc1042@11
+    AIn4 -> pc1042@12
+    AIn5 -> pc1042@9
+    AIn6 -> pc1042@10
+
+SN74HC175: Antmicro.Renode.Peripherals.GPIOPort.SN74HC175 @ sysbus <0x70020800, +0x400>
+    4 -> uln2803a3@0
+    5 -> uln2803a3@1
+    6 -> uln2803a3@2
+    7 -> uln2803a3@3
+    0 -> gpioPortG@0
+    1 -> gpioPortF@13
+    2 -> gpioPortF@14
+    3 -> gpioPortF@15
+
+uln2803a1: Antmicro.Renode.Peripherals.Miscellaneous.ULN2803A @ sysbus <0x70030000, +0x400>
+    8 -> pc1041@23
+    9 -> pc1041@24
+    10 -> pc1041@25
+    11 -> pc1041@26
+    12 -> pc1041@27
+    13 -> pc1041@28
+    14 -> pc1041@29
+    15 -> pc1041@30
+
+uln2803a2: Antmicro.Renode.Peripherals.Miscellaneous.ULN2803A @ sysbus <0x70030400, +0x400>
+    8 -> pc1041@31
+    9 -> pc1041@32
+    10 -> pc1041@33
+    11 -> pc1041@34
+    12 -> pc1041@35
+    13 -> pc1041@36
+    14 -> pc1041@37
+    15 -> pc1041@38
+
+uln2803a3: Antmicro.Renode.Peripherals.Miscellaneous.ULN2803A @ sysbus <0x70030800, +0x400>
+    8 -> pc1041@49
+    9 -> pc1041@50
+    10 -> pc1042@27
+    11 -> pc1042@28
+
+W25Q5121: Antmicro.Renode.Peripherals.SPI.W25Q512_SPI @ sysbus 0xA0001000
+    CS -> gpioPortE@0
+    CLK -> gpioPortE@2
+    SO -> gpioPortE@5
+    SI -> gpioPortE@6
+
+W25Q5122: Antmicro.Renode.Peripherals.SPI.W25Q512_SPI @ sysbus 0xA0002000
+    CS -> gpioPortE@1
+    CLK -> gpioPortE@2
+    SO -> gpioPortE@5
+    SI -> gpioPortE@6
+
+MAX4881: Antmicro.Renode.Peripherals.UART.MAX488ESA @ sysbus 0x70031800
+
+MAX4882: Antmicro.Renode.Peripherals.UART.MAX488ESA @ sysbus 0x70032800
+
+MAX4883: Antmicro.Renode.Peripherals.UART.MAX488ESA @ sysbus 0x70033800
+
+MAX4884: Antmicro.Renode.Peripherals.UART.MAX488ESA @ sysbus 0x70034800
+
+TJA1050: Antmicro.Renode.Peripherals.CAN.TJA1050 @ sysbus <0x70070800, +0x400>
+
+pc1041: Antmicro.Renode.Peripherals.GPIOPort.PC104 @ sysbus <0x70040000, +0x1000>
+pc1042: Antmicro.Renode.Peripherals.GPIOPort.PC104 @ sysbus <0x70050000, +0x1000>
+
+Faultkind: Antmicro.Renode.Peripherals.GPIOPort.PC104 @ sysbus <0x70060000, +0x1000>
+
+Time: Antmicro.Renode.Peripherals.GPIOPort.PC104 @ sysbus <0x70080000, +0x1000>
+
+sysbus:
+    init:
+        ApplySVD @https://dl.antmicro.com/projects/renode/svd/STM32F429x.svd.gz

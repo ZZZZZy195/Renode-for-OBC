@@ -1,0 +1,77 @@
+include @/home/zhanyi/dm/w25q.cs
+include @/home/zhanyi/dm/sn74.cs
+include @/home/zhanyi/dm/SN74HC175.cs
+include @/home/zhanyi/dm/TJA1050.cs
+include @/home/zhanyi/dm/ULN2803A.cs
+include @/home/zhanyi/dm/2JB1-910.cs
+include @/home/zhanyi/dm/PC104.cs
+include @/home/zhanyi/dm/ads8344g.cs
+include @/home/zhanyi/dm/MAX488.cs
+
+mach create "STM32F429"
+
+machine LoadPlatformDescription @/home/zhanyi/dm/link.repl
+
+cpu PerformanceInMips 125
+
+# 设置全局日志级别为 NOISY（最详细日志）
+logLevel -1  
+
+# 记录各个外设的访问情况
+sysbus LogPeripheralAccess sysbus.W25Q5121
+sysbus LogPeripheralAccess sysbus.W25Q5122
+sysbus LogPeripheralAccess sysbus.SN74AHC2731
+sysbus LogPeripheralAccess sysbus.SN74AHC2732
+sysbus LogPeripheralAccess sysbus.ADS83441
+sysbus LogPeripheralAccess sysbus.ADS83442
+sysbus LogPeripheralAccess sysbus.SN74HC175
+sysbus LogPeripheralAccess sysbus.uln2803a1
+sysbus LogPeripheralAccess sysbus.uln2803a2
+sysbus LogPeripheralAccess sysbus.uln2803a3
+sysbus LogPeripheralAccess sysbus.JB1910
+sysbus LogPeripheralAccess sysbus.pc1041
+sysbus LogPeripheralAccess sysbus.pc1042
+sysbus LogPeripheralAccess sysbus.Faultkind
+sysbus LogPeripheralAccess sysbus.Time
+sysbus LogPeripheralAccess sysbus.MAX4881
+sysbus LogPeripheralAccess sysbus.MAX4882
+sysbus LogPeripheralAccess sysbus.MAX4883
+sysbus LogPeripheralAccess sysbus.MAX4884
+sysbus LogPeripheralAccess sysbus.TJA1050
+
+
+
+# 设置特定外设的日志级别
+logLevel -1 sysbus.W25Q5121
+logLevel -1 sysbus.W25Q5122
+logLevel -1 sysbus.SN74AHC2731
+logLevel -1 sysbus.SN74AHC2732
+logLevel -1 sysbus.ADS83441
+logLevel -1 sysbus.ADS83442
+logLevel -1 sysbus.SN74HC175
+logLevel -1 sysbus.uln2803a1
+logLevel -1 sysbus.uln2803a2
+logLevel -1 sysbus.uln2803a3
+logLevel -1 sysbus.JB1910
+logLevel -1 sysbus.pc1041
+logLevel -1 sysbus.pc1042
+logLevel -1 sysbus.Faultkind
+logLevel -1 sysbus.Time
+logLevel -1 sysbus.MAX4881
+logLevel -1 sysbus.MAX4882
+logLevel -1 sysbus.MAX4883
+logLevel -1 sysbus.MAX4884
+logLevel -1 sysbus.TJA1050
+
+
+# 记录所有日志到文件
+logFile @/home/zhanyi/dm/logs/renode.log
+
+# 消除无关的未实现寄存器警告
+sysbus SilenceRange <0x400D0000 0x1000>
+
+# 加载 ELF 文件
+$bin?=@/home/zhanyi/dm/OBC_BSP_V1.3.elf
+sysbus LoadELF $bin
+
+start
